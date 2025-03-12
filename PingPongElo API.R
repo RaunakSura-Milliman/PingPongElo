@@ -10,7 +10,7 @@ cors <- function(req, res) {
 }
 
 # Plumb the file
-pr <- plumb("C:/Users/raunak.sura/Desktop/PingPongElo/PingPongElo.R")
+pr <- plumb("C:/Users/raunak.sura/Desktop/PingPongElo/PingPongElo/PingPongElo.R")
 
 # Add the CORS filter to the Plumber router
 pr$registerHooks(

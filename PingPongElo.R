@@ -1,28 +1,12 @@
 # Load necessary libraries
 library(elo)
+library(jsonlite)
 
 # Create an environment to store ratings
 ratings_env <- new.env()
 
 # Initialize players and their ratings in the environment
-ratings_env$ratings <- list(
-  Victor = 1000,
-  Zoe = 1000,
-  Cameron = 1000,
-  Raunak = 1000,
-  Charlotte = 1000,
-  Adam = 1000,
-  Simon = 1000,
-  Alexson = 1000,
-  Brendan = 1000,
-  David = 1000,
-  Durand = 1000,
-  Alice = 1000,
-  Julia = 1000,
-  Jessica = 1000,
-  Bryan = 1000,
-  Jack = 1000
-)
+ratings_env$ratings <- fromJSON('players.json')
 
 #* @get /ratings
 #* Return the current ratings
