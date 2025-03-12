@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong Elo Rating</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        input[type="text"], button { width: 100%; padding: 10px; margin-top: 10px; }
+        #ratings { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ping Pong Elo Rating</h1>
+        <button onclick="getRatings()">Get Current Ratings</button>
+        <div id="ratings"></div>
+        
+        <h2>Update Match Result</h2>
+        <input type="text" id="winner" placeholder="Winner Name">
+        <input type="text" id="loser" placeholder="Loser Name">
+        <button onclick="updateMatch()">Submit Match Result</button>
+    </div>
+
+    <script>
+        async function getRatings() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/ratings');
+                const data = await response.json();
+                document.getElementById('ratings').innerHTML = JSON.stringify(data, null, 2);
+            } catch (error) {
+                alert('Error fetching ratings: ' + error);
+            }
+        }
+
+        async function updateMatch() {
+            const winner = document.getElementById('winner').value;
+            const loser = document.getElementById('loser').value;
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/match', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ winner, loser })
+                });
+                const data = await response.json();
+                alert('Match updated: ' + JSON.stringify(data));
+                getRatings();
+            } catch (error) {
+                alert('Error updating match: ' + error);
+            }
+        }
+    </script>
+</body>
+</html>
